@@ -7,6 +7,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <Button Content="Загрузить документ" HorizontalAlignment="Left" Margin="27,55,0,0" VerticalAlignment="Top" Width="136" Click="Button_Click"/>
+        <Label x:Name="ocr_txt" Content="Распознанный текст" HorizontalAlignment="Left" Margin="500,44,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="textbox1" HorizontalAlignment="Left" Height="216" Margin="500,87,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="268"/>
+        <ProgressBar x:Name="progressbar1" HorizontalAlignment="Left" Height="30" Margin="38,370,0,0" VerticalAlignment="Top" Width="717" Foreground="#FF35BFD4" SmallChange="1" Background="White"/>
+
     </Grid>
 </Window>
