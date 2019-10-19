@@ -17,6 +17,7 @@ using Microsoft.Win32;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Threading;
+using System.IO;
 
 namespace neural_signatures
 {
@@ -25,7 +26,7 @@ namespace neural_signatures
     /// </summary>
     public partial class MainWindow : Window
     {
-        DispatcherTimer timer;
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -55,11 +56,46 @@ namespace neural_signatures
                (ThreadStart)delegate ()
                {
                    //OpenFileDialog openFileDialog = (OpenFileDialog)obj;
+
+                   string radio_lang="rus";
+                   bool radio_bool = true;
                    Bitmap img = new Bitmap(openFileDialog.FileName);
-                   TesseractEngine ocr = new TesseractEngine("./tessdata", "eng+rus", EngineMode.Default);
+                   string path = AppDomain.CurrentDomain.BaseDirectory;
+                   string PathFolder1 = System.IO.Path.GetDirectoryName(path);
+                   string PathFolder2 = System.IO.Path.GetDirectoryName(PathFolder1);
+                   PathFolder1 = System.IO.Path.GetDirectoryName(PathFolder2);
+                   PathFolder1 = PathFolder1.ToString() + @"\documents\"+ openFileDialog.SafeFileName;
+                   if (!File.Exists(PathFolder1))
+                   {
+                       File.Copy(openFileDialog.FileName.ToString(), PathFolder1, true);
+                   }
+                   else if (!(openFileDialog.FileName.ToString() == PathFolder1))
+                   {
+                       MessageBox.Show("Файл с таким именем уже существует в проекте в папке /debug/documents. Скорее всего вы уже его загружали. Проверьте, если файлы действительно разные, то переименуйте его! Если файлы одинаковые, то запускайте из папки documents");
+                       progressbar1.Value = 0;
+                       return;
+                   }
+                   while (radio_bool) {
+                       if ((bool)radio_rus.IsChecked) {
+                           radio_lang = "rus";
+                           radio_bool = false;
+                       } else if ((bool)radio_eng.IsChecked)
+                       {
+                           radio_lang = "eng";
+                           radio_bool = false;
+                       }else if ((bool)radio_rus_eng.IsChecked)
+                       {
+                           radio_lang = "rus+eng";
+                           radio_bool = false;
+                       }
+                   }
+                   TesseractEngine ocr = new TesseractEngine("./tessdata", radio_lang, EngineMode.Default);
                    var page = ocr.Process(img);
                    progressbar1.Value = 100;
                    textbox1.Text = page.GetText();
+
+
+                 
                });
                 }).Start();
 
