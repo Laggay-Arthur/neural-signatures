@@ -21,6 +21,7 @@
         </GroupBox>
         <Button x:Name="set_by_hand" Content="Указать вручную положение подписи" HorizontalAlignment="Left" Margin="206,10,0,0" VerticalAlignment="Top" Width="216" Click="set_by_hand_Click"/>
         <Button x:Name="TrainWeb" Content="Обучить нейросеть" HorizontalAlignment="Left" Margin="10,320,0,0" VerticalAlignment="Top" Width="119" Click="TrainWeb_Click"/>
+        <Button x:Name="btn_insert_to_db" Content="Button" HorizontalAlignment="Left" Margin="324,306,0,0" VerticalAlignment="Top" Width="224" Click="Btn_insert_to_db_Click" Visibility="Hidden"/>
 
     </Grid>
 </Window>

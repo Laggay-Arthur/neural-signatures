@@ -11,6 +11,7 @@ namespace neural_signatures
 {
     public partial class MainWindow : Window
     {
+        private string SafeFileName = "";
         public MainWindow() { InitializeComponent(); }
 
         OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -18,21 +19,23 @@ namespace neural_signatures
         {
             if (openFileDialog.ShowDialog() == true)
             {
+                SafeFileName = openFileDialog.SafeFileName;
                 string currDir = Environment.CurrentDirectory;
                 string docDir = currDir + "\\documents\\";
 
                 if (!Directory.Exists(docDir)) Directory.CreateDirectory(docDir);
-
-                if (!File.Exists(docDir + openFileDialog.FileName))
-                    File.Copy(openFileDialog.FileName, docDir + openFileDialog.SafeFileName);
-
-                else
+                if (openFileDialog.FileName != (docDir + openFileDialog.SafeFileName))
                 {
-                    MessageBox.Show("Файл с таким именем уже существует в проекте в папке /debug/documents. Скорее всего вы уже его загружали. Проверьте, если файлы действительно разные, то переименуйте его! Если файлы одинаковые, то запускайте из папки documents");
-                    progressbar1.Value = 0;
-                    return;
-                }
+                    if (!File.Exists(docDir + openFileDialog.SafeFileName))
+                        File.Copy(openFileDialog.FileName, docDir + openFileDialog.SafeFileName);
 
+                    else
+                    {
+                        MessageBox.Show("Файл с таким именем уже существует в проекте в папке /debug/documents. Скорее всего вы уже его загружали. Проверьте, если файлы действительно разные, то переименуйте его! Если файлы одинаковые, то запускайте из папки documents");
+                        progressbar1.Value = 0;
+                        return;
+                    }
+                }
                 //loaded_img.Source = new BitmapImage(new Uri(openFileDialog.FileName));
 
                 string radio_lang = "rus";
@@ -52,6 +55,7 @@ namespace neural_signatures
                     var page = ocr.Process(img, PageSegMode.Auto);
                     s = page.GetText();
                 });
+                btn_insert_to_db.Visibility = Visibility.Visible;
                 textbox1.Text = s;
             }
         }
@@ -76,6 +80,14 @@ namespace neural_signatures
             }
             tww = new TrainWebWindow();
             tww.Show();
+        }
+
+        private void Btn_insert_to_db_Click(object sender, RoutedEventArgs e)
+        {
+            DataBase db = new DataBase();
+
+            db.insert(SafeFileName, "Вася", textbox1.Text);
+            MessageBox.Show("Документ добавлен!");
         }
     }
 }

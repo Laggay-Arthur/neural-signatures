@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-\\VBOXSVR\GitHub\neural-signatures\neural-signatures\obj\Debug\
+D:\neural-project\neural-signatures\neural-signatures\obj\Debug\
 neural_signatures
 none
 false
 DEBUG;TRACE
-\\VBOXSVR\GitHub\neural-signatures\neural-signatures\App.xaml
+D:\neural-project\neural-signatures\neural-signatures\App.xaml
 31104832770
 
-7788473496
-16536280158
+81620303618
+1710159800
 MainWindow.xaml;SetPositionByHand.xaml;TrainWebWindow.xaml;
 
 False
