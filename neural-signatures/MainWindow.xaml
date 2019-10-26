@@ -19,6 +19,7 @@
                 <RadioButton x:Name="radio_rus_eng" Content="Рус.+Анг." HorizontalAlignment="Left" Margin="0,52,0,0" VerticalAlignment="Top" GroupName="radio_lang"/>
             </Grid>
         </GroupBox>
+        <Button x:Name="btn_insert_to_db" Content="Добавить в базу данных" HorizontalAlignment="Left" Margin="265,277,0,0" VerticalAlignment="Top" Width="146" Click="Btn_insert_to_db_Click" Visibility="Hidden"/>
 
     </Grid>
 </Window>

@@ -60,3 +60,6 @@ D:\neural-signatures\neural-signatures\obj\Debug\neural-signatures.pdb
 \\VBOXSVR\GitHub\neural-signatures\neural-signatures\obj\Debug\neural-signatures.csproj.CopyComplete
 \\VBOXSVR\GitHub\neural-signatures\neural-signatures\obj\Debug\neural-signatures.exe
 \\VBOXSVR\GitHub\neural-signatures\neural-signatures\obj\Debug\neural-signatures.pdb
+D:\neural-signatures\neural-signatures\bin\Debug\Documents.mdf
+D:\neural-signatures\neural-signatures\bin\Debug\Documents_log.ldf
+D:\neural-signatures\neural-signatures\obj\Debug\neural-signatures_Content.g.cs

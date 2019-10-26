@@ -7,10 +7,12 @@ using Microsoft.Win32;
 using System.Threading.Tasks;
 
 
+
 namespace neural_signatures
 {
     public partial class MainWindow : Window
     {
+        private string SafeFileName = "";
         public MainWindow() { InitializeComponent(); }
 
         private async void Button_Click(object sender, RoutedEventArgs e)
@@ -26,6 +28,7 @@ namespace neural_signatures
                 string PathFolder2 = Path.GetDirectoryName(PathFolder1);
                 PathFolder1 = Path.GetDirectoryName(PathFolder2);
                 PathFolder1 = PathFolder1.ToString() + @"\documents\" + openFileDialog.SafeFileName;
+                SafeFileName = openFileDialog.SafeFileName;
                 if (!File.Exists(PathFolder1))
                 {
                     File.Copy(openFileDialog.FileName, PathFolder1, true);
@@ -51,8 +54,18 @@ namespace neural_signatures
                     var page = ocr.Process(img, PageSegMode.Auto);
                     s = page.GetText();
                 });
+                btn_insert_to_db.Visibility= Visibility.Visible;
                 textbox1.Text = s;
             }
+        }
+
+        private void Btn_insert_to_db_Click(object sender, RoutedEventArgs e)
+        {
+            DataBase db = new DataBase();
+          
+            db.insert(SafeFileName,"Вася",textbox1.Text);
+            MessageBox.Show("Документ добавлен!");
+
         }
     }
 }
