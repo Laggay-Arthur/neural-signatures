@@ -13,36 +13,37 @@ namespace neural_signatures
     {
         public MainWindow() { InitializeComponent(); }
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        OpenFileDialog openFileDialog = new OpenFileDialog();
+        async void Button_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
             if (openFileDialog.ShowDialog() == true)
             {
-                string radio_lang = "rus";
+                string currDir = Environment.CurrentDirectory;
+                string docDir = currDir + "\\documents\\";
 
-                Bitmap img = new Bitmap(openFileDialog.FileName);
-                string path = AppDomain.CurrentDomain.BaseDirectory;
-                string PathFolder1 = Path.GetDirectoryName(path);
-                string PathFolder2 = Path.GetDirectoryName(PathFolder1);
-                PathFolder1 = Path.GetDirectoryName(PathFolder2);
-                PathFolder1 = PathFolder1.ToString() + @"\documents\" + openFileDialog.SafeFileName;
-                if (!File.Exists(PathFolder1))
-                {
-                    File.Copy(openFileDialog.FileName, PathFolder1, true);
-                }
-                else if (!(openFileDialog.FileName == PathFolder1))
+                if (!Directory.Exists(docDir)) Directory.CreateDirectory(docDir);
+
+                if (!File.Exists(docDir + openFileDialog.FileName))
+                    File.Copy(openFileDialog.FileName, docDir + openFileDialog.SafeFileName);
+
+                else
                 {
                     MessageBox.Show("Файл с таким именем уже существует в проекте в папке /debug/documents. Скорее всего вы уже его загружали. Проверьте, если файлы действительно разные, то переименуйте его! Если файлы одинаковые, то запускайте из папки documents");
                     progressbar1.Value = 0;
                     return;
                 }
 
+                //loaded_img.Source = new BitmapImage(new Uri(openFileDialog.FileName));
+
+                string radio_lang = "rus";
                 if ((bool)radio_rus.IsChecked)
                 { radio_lang = "rus"; }
                 else if ((bool)radio_eng.IsChecked)
                 { radio_lang = "eng"; }
                 else if ((bool)radio_rus_eng.IsChecked)
                 { radio_lang = "rus+eng"; }
+
+                Bitmap img = new Bitmap(openFileDialog.FileName);
 
                 string s = "";
                 await Task.Run(() =>
@@ -53,6 +54,28 @@ namespace neural_signatures
                 });
                 textbox1.Text = s;
             }
+        }
+
+        void Window_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e) => DragMove();
+        SetPositionByHand spbh = null;
+        void set_by_hand_Click(object sender, RoutedEventArgs e)
+        {
+            if (openFileDialog.FileName.Length > 0)
+            {
+                spbh = new SetPositionByHand(openFileDialog.FileName);
+                spbh.Show();
+            }
+            else { MessageBox.Show("Укажите какой скан загружать"); }
+        }
+        TrainWebWindow tww = null;
+        void TrainWeb_Click(object sender, RoutedEventArgs e)
+        {
+            if (tww != null)
+            {
+                tww.Close();
+            }
+            tww = new TrainWebWindow();
+            tww.Show();
         }
     }
 }

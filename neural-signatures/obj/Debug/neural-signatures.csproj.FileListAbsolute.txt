@@ -60,3 +60,7 @@ D:\neural-signatures\neural-signatures\obj\Debug\neural-signatures.pdb
 \\VBOXSVR\GitHub\neural-signatures\neural-signatures\obj\Debug\neural-signatures.csproj.CopyComplete
 \\VBOXSVR\GitHub\neural-signatures\neural-signatures\obj\Debug\neural-signatures.exe
 \\VBOXSVR\GitHub\neural-signatures\neural-signatures\obj\Debug\neural-signatures.pdb
+\\VBOXSVR\GitHub\neural-signatures\neural-signatures\obj\Debug\SetPositionByHand.g.cs
+\\VBOXSVR\GitHub\neural-signatures\neural-signatures\obj\Debug\SetPositionByHand.baml
+\\VBOXSVR\GitHub\neural-signatures\neural-signatures\obj\Debug\TrainWebWindow.g.cs
+\\VBOXSVR\GitHub\neural-signatures\neural-signatures\obj\Debug\TrainWebWindow.baml
