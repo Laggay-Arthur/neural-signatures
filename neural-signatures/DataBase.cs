@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using System.Configuration;
+using System.Data.SqlClient;
+using System.Threading.Tasks;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Collections.Generic;
 namespace neural_signatures
 {
     class DataBase
@@ -25,8 +25,8 @@ namespace neural_signatures
                 string connection = //@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + PathFolder1 + ";Integrated Security=True";
                                     // @"Data Source = (LocalDB)\MSSQLLocalDB; Initial Catalog = D:\neural - signatures\neural - signatures\Documents.mdf; Integrated Security = True; User Instance=True";
                 ConfigurationManager.ConnectionStrings["connect"].ConnectionString;
-                connection = connection.Replace("D:\\neural-signatures\\neural-signatures", PathFolder1.ToString());
-                text = PathFolder1.ToString();
+                connection = connection.Replace("D:\\neural-signatures\\neural-signatures", PathFolder1);
+                text = PathFolder1;
                 
                 return connection;
             }
