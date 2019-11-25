@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:neural_signatures"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="675" Width="1220.698"  MouseLeftButtonDown="Window_MouseLeftButtonDown">
     <Grid>
-        <Button Content="Загрузить документ" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="191" Click="Button_Click"/>
-        <Label x:Name="ocr_txt" Content="Распознанный текст" HorizontalAlignment="Left" Margin="206,10,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="textbox1" HorizontalAlignment="Left" Height="216" Margin="206,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="268"/>
-        <ProgressBar x:Name="progressbar1" HorizontalAlignment="Left" Height="90" Margin="10,167,0,0" VerticalAlignment="Top" Width="163" Foreground="#FF35BFD4" SmallChange="1" Background="White"/>
+        <Button Content="Загрузить скан" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="191" Click="Button_Click"/>
+        <Label x:Name="ocr_txt" Content="Распознанный текст" HorizontalAlignment="Left" Margin="427,10,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="textbox1" HorizontalAlignment="Left" Height="216" Margin="427,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="268"/>
+        <ProgressBar x:Name="progressbar1" HorizontalAlignment="Left" Height="32" Margin="10,167,0,0" VerticalAlignment="Top" Width="191" Foreground="#FF35BFD4" SmallChange="1" Background="White"/>
         <GroupBox Header="Язык документа" HorizontalAlignment="Left" Height="118" Margin="10,44,0,0" VerticalAlignment="Top" Width="191">
             <Grid>
                 <RadioButton x:Name="radio_rus" Content="Рус." HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" GroupName="radio_lang" IsChecked="True"/>
@@ -19,7 +19,13 @@
                 <RadioButton x:Name="radio_rus_eng" Content="Рус.+Анг." HorizontalAlignment="Left" Margin="0,52,0,0" VerticalAlignment="Top" GroupName="radio_lang"/>
             </Grid>
         </GroupBox>
+<<<<<<< HEAD
         <Button x:Name="btn_insert_to_db" Content="Добавить в базу данных" HorizontalAlignment="Left" Margin="265,277,0,0" VerticalAlignment="Top" Width="146" Click="Btn_insert_to_db_Click" Visibility="Hidden"/>
+=======
+        <Button x:Name="set_by_hand" Content="Указать вручную положение подписи" HorizontalAlignment="Left" Margin="206,10,0,0" VerticalAlignment="Top" Width="216" Click="set_by_hand_Click"/>
+        <Button x:Name="TrainWeb" Content="Обучить нейросеть" HorizontalAlignment="Left" Margin="10,320,0,0" VerticalAlignment="Top" Width="119" Click="TrainWeb_Click"/>
+        <Button x:Name="btn_insert_to_db" Content="Button" HorizontalAlignment="Left" Margin="324,306,0,0" VerticalAlignment="Top" Width="224" Click="Btn_insert_to_db_Click" Visibility="Hidden"/>
+>>>>>>> e94789b82e44f9ea0c5c0c22bc7362385a7ff80a
 
     </Grid>
 </Window>
