@@ -24,18 +24,17 @@ namespace neural_signatures
                 string docDir = currDir + "\\documents\\";
 
                 if (!Directory.Exists(docDir)) Directory.CreateDirectory(docDir);
-                if (openFileDialog.FileName != (docDir + openFileDialog.SafeFileName))
-                {
-                    if (!File.Exists(docDir + openFileDialog.SafeFileName))
-                        File.Copy(openFileDialog.FileName, docDir + openFileDialog.SafeFileName);
 
-                    else
-                    {
-                        MessageBox.Show("Файл с таким именем уже существует в проекте в папке /debug/documents. Скорее всего вы уже его загружали. Проверьте, если файлы действительно разные, то переименуйте его! Если файлы одинаковые, то запускайте из папки documents");
-                        progressbar1.Value = 0;
-                        return;
-                    }
-                }
+                if (!File.Exists(docDir + openFileDialog.SafeFileName))
+                    File.Copy(openFileDialog.FileName, docDir + openFileDialog.SafeFileName);
+                
+                //else
+                //{
+                //    MessageBox.Show("Файл с таким именем уже существует в проекте в папке /debug/documents. Скорее всего вы уже его загружали. Проверьте, если файлы действительно разные, то переименуйте его! Если файлы одинаковые, то запускайте из папки documents");
+                //    progressbar1.Value = 0;
+                //    return;
+                //}
+
                 //loaded_img.Source = new BitmapImage(new Uri(openFileDialog.FileName));
 
                 string radio_lang = "rus";
@@ -51,7 +50,7 @@ namespace neural_signatures
                 string s = "";
                 await Task.Run(() =>
                 {
-                    TesseractEngine ocr = new TesseractEngine("./tessdata", radio_lang, EngineMode.CubeOnly);
+                    TesseractEngine ocr = new TesseractEngine("./tessdata", radio_lang);
                     var page = ocr.Process(img, PageSegMode.Auto);
                     s = page.GetText();
                 });
