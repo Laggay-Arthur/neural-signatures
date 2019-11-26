@@ -12,6 +12,7 @@ namespace neural_signatures
     public partial class MainWindow : Window
     {
         private string SafeFileName = "";
+        DateTime? date_validity=null;
         public MainWindow() { InitializeComponent(); }
 
         OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -83,10 +84,23 @@ namespace neural_signatures
 
         private void Btn_insert_to_db_Click(object sender, RoutedEventArgs e)
         {
+            if ((date_validity == null) && (date_have.IsChecked==true))
+            {
+                MessageBox.Show("Пожалуйста, проверьте дату окончания документа, если она есть в договоре!");
+                return;
+            }
             DataBase db = new DataBase();
-
-            db.insert(SafeFileName, "Вася", textbox1.Text);
+            if (date_have.IsChecked == false)
+            {
+                db.insert(SafeFileName, "Вася", textbox1.Text);
+            }
+            else db.insert(SafeFileName, "Вася", textbox1.Text, (DateTime)date_validity);
             MessageBox.Show("Документ добавлен!");
+        }
+
+        private void DatePicker_SelectedDateChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            date_validity = (DateTime)DatePicker.SelectedDate;
         }
     }
 }

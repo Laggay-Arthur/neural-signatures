@@ -24,28 +24,28 @@ namespace neural_signatures
                // PathFolder1 = PathFolder1.ToString() + @"\Documents.mdf";
                 string connection = //@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + PathFolder1 + ";Integrated Security=True";
                                     // @"Data Source = (LocalDB)\MSSQLLocalDB; Initial Catalog = D:\neural - signatures\neural - signatures\Documents.mdf; Integrated Security = True; User Instance=True";
-                ConfigurationManager.ConnectionStrings["connect"].ConnectionString;
-                connection = connection.Replace("D:\\neural-signatures\\neural-signatures", PathFolder1);
+                connection = ConfigurationManager.ConnectionStrings["connect"].ConnectionString;
+                //connection = connection.Replace("D:\\neural-signatures\\neural-signatures", PathFolder1);
                 text = PathFolder1;
                 
                 return connection;
             }
         }
-        public async Task<string> insert(string name_document, string name_people, string text_document, DateTime date_validity)
+        public string insert(string name_document, string name_people, string text_document, DateTime date_validity)
         {
 
             sqlconnection = new SqlConnection(Connection);
-            await sqlconnection.OpenAsync();
+             sqlconnection.Open();
             //SqlDataReader sqlreader = null;
             SqlCommand com = new SqlCommand(
 
-                "INSERT INTO DocumentsAll() VALUES(@name_document, @name_people, @text_document, @date_document,@date_validity)", sqlconnection);
+                "INSERT INTO DocumentsAll(name_document, name_people, text_document, date_document,date_validity) VALUES(@name_document, @name_people, @text_document, @date_document,@date_validity)", sqlconnection);
             com.Parameters.AddWithValue("name_document", name_document);
             com.Parameters.AddWithValue("name_people", name_people);
             com.Parameters.AddWithValue("text_document", text_document);
             com.Parameters.AddWithValue("date_document", DateTime.Now);
-            com.Parameters.AddWithValue("date_validdity", date_validity);
-            await com.ExecuteNonQueryAsync();
+            com.Parameters.AddWithValue("date_validity", date_validity);
+             com.ExecuteNonQuery();
             sqlconnection.Close();
             return "Данные занесены в таблицу!";
         }
