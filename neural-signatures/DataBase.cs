@@ -67,6 +67,23 @@ namespace neural_signatures
             sqlconnection.Close();
             return "Данные занесены в таблицу!";
         }
+
+        public string insertToFIO(string FIO)
+        {
+            string connect = Connection;
+            sqlconnection = new SqlConnection(connect);
+            sqlconnection.Open();
+            //SqlDataReader sqlreader = null;
+            SqlCommand com = new SqlCommand(
+
+                "INSERT INTO FIO(FIO) VALUES(@FIO)", sqlconnection);
+            com.Parameters.AddWithValue("FIO", FIO);
+         
+
+            com.ExecuteNonQuery();
+            sqlconnection.Close();
+            return "Данные занесены в таблицу!";
+        }
         public void SelectAll()
         {
             string connect = Connection;

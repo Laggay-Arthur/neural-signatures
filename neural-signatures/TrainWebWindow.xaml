@@ -16,8 +16,8 @@
                 <ComboBox HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Width="291"/>
                 <Label Content="Добавить нового сотрудника вручную:" HorizontalAlignment="Left" Margin="10,88,0,0" VerticalAlignment="Top"/>
                 <Label Content="ФИО" HorizontalAlignment="Left" Margin="10,114,0,0" VerticalAlignment="Top"/>
-                <TextBox HorizontalAlignment="Left" Height="23" Margin="10,140,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="307"/>
-                <Button Content="ДОБАВИТЬ" HorizontalAlignment="Left" Margin="10,183,0,0" VerticalAlignment="Top" Width="75" Foreground="#FF359E04" FontWeight="Bold"/>
+                <TextBox x:Name="insertFIO" HorizontalAlignment="Left" Height="23" Margin="10,140,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="307"/>
+                <Button Content="ДОБАВИТЬ" HorizontalAlignment="Left" Margin="10,183,0,0" VerticalAlignment="Top" Width="75" Foreground="#FF359E04" FontWeight="Bold" Click="Button_Click"/>
 
             </Grid>
         </GroupBox>

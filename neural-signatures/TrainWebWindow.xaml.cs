@@ -22,5 +22,17 @@ namespace neural_signatures
         }
 
         void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => DragMove();
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            
+            DataBase db = new DataBase();
+          
+            {
+                db.insertToFIO(insertFIO.Text);
+            }
+           
+            System.Windows.MessageBox.Show("Сотрудник добавлен в БД!");
+        }
     }
 }
