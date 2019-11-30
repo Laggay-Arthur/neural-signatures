@@ -22,7 +22,7 @@
         <Button x:Name="set_by_hand" Content="Указать вручную положение подписи" HorizontalAlignment="Left" Margin="206,10,0,0" VerticalAlignment="Top" Width="216" Click="set_by_hand_Click"/>
         <Button x:Name="TrainWeb" Content="Обучить нейросеть" HorizontalAlignment="Left" Margin="10,320,0,0" VerticalAlignment="Top" Width="119" Click="TrainWeb_Click"/>
         <Button x:Name="btn_insert_to_db" Content="Добавить в БД" HorizontalAlignment="Left" Margin="324,306,0,0" VerticalAlignment="Top" Width="224" Click="Btn_insert_to_db_Click" Visibility="Hidden"/>
-        <ComboBox HorizontalAlignment="Left" Margin="277,58,0,0" VerticalAlignment="Top" Width="136"/>
+        <ComboBox x:Name="comboboxFIO" HorizontalAlignment="Left" Margin="277,58,0,0" VerticalAlignment="Top" Width="136"/>
         <Label x:Name="FIO" Content="ФИО" HorizontalAlignment="Left" Margin="216,58,0,0" VerticalAlignment="Top"/>
         <DatePicker x:Name="DatePicker" HorizontalAlignment="Left" Margin="315,100,0,0" VerticalAlignment="Top" Text="Дата окончания" Cursor="Pen" SelectedDateChanged="DatePicker_SelectedDateChanged"/>
         <CheckBox x:Name="date_have" Content="Есть Дата Оконч." HorizontalAlignment="Left" Margin="300,147,0,0" VerticalAlignment="Top" IsChecked="True"/>

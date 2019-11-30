@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
@@ -9,8 +11,28 @@ namespace neural_signatures
 {
     public partial class TrainWebWindow : Window
     {
-        public TrainWebWindow() { InitializeComponent(); }
+        List<string> FIOList = new List<string>(1);
+        public MainWindow f1 { get; set; }
+        public TrainWebWindow() { InitializeComponent();
 
+         new Thread(() => {
+                Action action = () =>
+                {
+                    DataBase db = new DataBase();
+                    FIOList = db.SelectFIO();
+                    foreach (string i in FIOList)
+                    {
+                        comboboxFIO.Items.Add(i);
+                    }
+
+                };
+                Dispatcher.Invoke(action);
+
+            }
+                ).Start();
+        }
+
+       
 
         OpenFileDialog openFileDialog = new OpenFileDialog();
         private void LoadTrain_Click(object sender, RoutedEventArgs e)
@@ -33,6 +55,23 @@ namespace neural_signatures
             }
            
             System.Windows.MessageBox.Show("Сотрудник добавлен в БД!");
+            comboboxFIO.Items.Clear();
+            new Thread(() => {
+                Action action = () =>
+                {
+                    
+                    FIOList = db.SelectFIO();
+                    foreach (string i in FIOList)
+                    {
+                        comboboxFIO.Items.Add(i);
+                    }
+
+                };
+                Dispatcher.Invoke(action);
+
+            }
+              ).Start();
+            f1.comboboxFIO.Items.Add(insertFIO.Text);
         }
     }
-}
+    }

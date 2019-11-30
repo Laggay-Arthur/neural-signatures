@@ -13,7 +13,7 @@
         <GroupBox Header="Установление авторства" HorizontalAlignment="Left" Height="396" Margin="406,14,0,0" VerticalAlignment="Top" Width="339">
             <Grid>
                 <Label Content="Выбрать авторство из уже известных сотрудников:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                <ComboBox HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Width="291"/>
+                <ComboBox x:Name="comboboxFIO" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Width="291"/>
                 <Label Content="Добавить нового сотрудника вручную:" HorizontalAlignment="Left" Margin="10,88,0,0" VerticalAlignment="Top"/>
                 <Label Content="ФИО" HorizontalAlignment="Left" Margin="10,114,0,0" VerticalAlignment="Top"/>
                 <TextBox x:Name="insertFIO" HorizontalAlignment="Left" Height="23" Margin="10,140,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="307"/>

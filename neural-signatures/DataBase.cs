@@ -7,12 +7,28 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Collections.Generic;
+using System.Windows.Controls;
+using System.Windows.Forms;
+
+
 namespace neural_signatures
 {
     class DataBase
     {
         public string text = "";
         public SqlConnection sqlconnection;
+        public System.Windows.Controls.ComboBox combobox;
+        public DataBase(ref System.Windows.Controls.ComboBox combo)
+        {
+            combobox = combo;
+
+        }
+
+        public DataBase()
+        {
+            
+
+        }
         public string Connection
         {
             get
@@ -103,6 +119,29 @@ namespace neural_signatures
             sqlreader.Close();
             sqlconnection.Close();
             //return "Данные занесены в таблицу!";
+        }
+
+        public List<string> SelectFIO()
+        {
+            List<string> FIO = new List<string>(10);
+            string connect = Connection;
+            sqlconnection = new SqlConnection(connect);
+            sqlconnection.Open();
+            SqlDataReader sqlreader = null;
+            SqlCommand com = new SqlCommand(
+
+                "SELECT * FROM FIO", sqlconnection);
+
+
+            sqlreader = com.ExecuteReader();
+            while (sqlreader.Read())
+            {
+                FIO.Add(sqlreader["FIO"].ToString());
+                
+            }
+            sqlreader.Close();
+            sqlconnection.Close();
+            return FIO;
         }
     }
 }
