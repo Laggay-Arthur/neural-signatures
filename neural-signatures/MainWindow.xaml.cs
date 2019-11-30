@@ -5,7 +5,9 @@ using System.Windows;
 using System.Drawing;
 using Microsoft.Win32;
 using System.Threading.Tasks;
-
+using System.Collections.Generic;
+using System.Threading;
+using System.Windows.Controls;
 
 namespace neural_signatures
 {
@@ -13,8 +15,45 @@ namespace neural_signatures
     {
         private string SafeFileName = "";
         DateTime? date_validity=null;
-        public MainWindow() { InitializeComponent(); }
+      public static List<string> FIOList = new List<string>(1);
+        public MainWindow() { InitializeComponent();
 
+            /*new Thread(() => {
+                Action action = () =>
+                {
+                    DataBase db = new DataBase(ref comboboxFIO);
+                    FIOList = db.SelectFIO();
+                    foreach (string i in FIOList)
+                    {
+                        comboboxFIO.Items.Add(i);
+                    }
+
+                };
+                Dispatcher.Invoke(action);
+            }
+                ).Start();*/
+
+            FIOAsync(comboboxFIO);
+           
+        }
+
+       public static async void FIOAsync(ComboBox comboboxFIO)
+        {
+            await Task.Run(() =>
+              {
+
+                  DataBase db = new DataBase();
+                  FIOList = db.SelectFIO();
+                  
+              }
+           
+               );
+            foreach (string i in FIOList)
+            {
+                comboboxFIO.Items.Add(i);
+            }
+        }
+    
         OpenFileDialog openFileDialog = new OpenFileDialog();
         async void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -79,6 +118,7 @@ namespace neural_signatures
                 tww.Close();
             }
             tww = new TrainWebWindow();
+            tww.f1 = this;
             tww.Show();
         }
 
@@ -92,9 +132,9 @@ namespace neural_signatures
             DataBase db = new DataBase();
             if (date_have.IsChecked == false)
             {
-                db.insert(SafeFileName, "Вася", textbox1.Text);
+                db.insert(SafeFileName, comboboxFIO.Text, textbox1.Text);
             }
-            else db.insert(SafeFileName, "Вася", textbox1.Text, (DateTime)date_validity);
+            else db.insert(SafeFileName, comboboxFIO.Text, textbox1.Text, (DateTime)date_validity);
             MessageBox.Show("Документ добавлен!");
         }
 
@@ -102,5 +142,14 @@ namespace neural_signatures
         {
             date_validity = (DateTime)DatePicker.SelectedDate;
         }
+
+      public string setFIOBox
+        {
+            set { string i = value;
+                comboboxFIO.Items.Add(i);
+            }
+            
+        }
+  
     }
 }
