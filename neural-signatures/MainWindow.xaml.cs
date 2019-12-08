@@ -27,8 +27,11 @@ namespace neural_signatures
         {//Получаем список сотрудников и выводим их списом
             await Task.Run(() =>
             {
-                foreach (string i in DataBase.SelectFIO())
-                    comboboxFIO.Items.Add(i);
+                Dispatcher.Invoke(() => {
+                    foreach (string i in DataBase.SelectFIO())
+                        comboboxFIO.Items.Add(i);
+                });
+                
             });
         }
 
@@ -63,15 +66,18 @@ namespace neural_signatures
         TrainWebWindow tww;//Окно, в котором можно обучать нейросеть
         void TrainWeb_Click(object sender, RoutedEventArgs e)
         {//Открывает окно для обучения нейросети
-            if (tww != null)
-            {
-                tww.Show(); return;
-            }
-            tww = new TrainWebWindow
-            {
-                baseComboboxFIO = this.comboboxFIO
-            };
-            tww.Show();
+         /* if (tww != null)
+          {
+              TrainWebWindow wb = new TrainWebWindow();
+              tww.Show(); return;
+          }
+          tww = new TrainWebWindow
+          {
+              baseComboboxFIO = this.comboboxFIO
+          };
+          tww.Show();*/
+            TrainWebWindow wb = new TrainWebWindow();
+            wb.Show(); return;
         }
 
         void Btn_insert_to_db_Click(object sender, RoutedEventArgs e)
