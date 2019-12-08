@@ -66,18 +66,14 @@ namespace neural_signatures
         TrainWebWindow tww;//Окно, в котором можно обучать нейросеть
         void TrainWeb_Click(object sender, RoutedEventArgs e)
         {//Открывает окно для обучения нейросети
-         /* if (tww != null)
-          {
-              TrainWebWindow wb = new TrainWebWindow();
-              tww.Show(); return;
-          }
-          tww = new TrainWebWindow
-          {
-              baseComboboxFIO = this.comboboxFIO
-          };
-          tww.Show();*/
-            TrainWebWindow wb = new TrainWebWindow();
-            wb.Show(); return;
+
+            if (tww != null)
+            {
+                tww = null;
+            }
+            tww = new TrainWebWindow(ref this.comboboxFIO);
+            tww.Show();
+
         }
 
         void Btn_insert_to_db_Click(object sender, RoutedEventArgs e)
