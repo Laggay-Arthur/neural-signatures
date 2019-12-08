@@ -10,11 +10,12 @@ namespace neural_signatures
 {
     public partial class TrainWebWindow : Window
     {
-        public ComboBox baseComboboxFIO;
-        public TrainWebWindow()
+        ComboBox baseComboboxFIO;
+        public TrainWebWindow(ref System.Windows.Controls.ComboBox combo)
         {
             InitializeComponent();
 
+            baseComboboxFIO = combo;
             Task.Run(() =>
             {//Получаем список сотрудников
                 foreach (string i in DataBase.SelectFIO())

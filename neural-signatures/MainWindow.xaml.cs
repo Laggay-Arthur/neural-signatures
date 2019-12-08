@@ -65,12 +65,9 @@ namespace neural_signatures
         {//Открывает окно для обучения нейросети
             if (tww != null)
             {
-                tww.Show(); return;
+                tww = null;
             }
-            tww = new TrainWebWindow
-            {
-                baseComboboxFIO = this.comboboxFIO
-            };
+            tww = new TrainWebWindow(this.comboboxFIO)
             tww.Show();
         }
 

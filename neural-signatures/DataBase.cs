@@ -23,9 +23,9 @@ namespace neural_signatures
                 string PathFolder2 = Path.GetDirectoryName(PathFolder1);
                 PathFolder1 = Path.GetDirectoryName(PathFolder2);
                 // PathFolder1 = PathFolder1.ToString() + @"\Documents.mdf";
-                string connection = //@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + PathFolder1 + ";Integrated Security=True";
-                                    // @"Data Source = (LocalDB)\MSSQLLocalDB; Initial Catalog = D:\neural - signatures\neural - signatures\Documents.mdf; Integrated Security = True; User Instance=True";
-                connection = ConfigurationManager.ConnectionStrings["connect"].ConnectionString;
+                string connection = ConfigurationManager.ConnectionStrings["connect"].ConnectionString;
+                //@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + PathFolder1 + ";Integrated Security=True";
+                // @"Data Source = (LocalDB)\MSSQLLocalDB; Initial Catalog = D:\neural - signatures\neural - signatures\Documents.mdf; Integrated Security = True; User Instance=True";
                 //connection = connection.Replace("D:\\neural-signatures\\neural-signatures", PathFolder1);
                 text = PathFolder1;
 
