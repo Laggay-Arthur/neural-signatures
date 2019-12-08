@@ -1,42 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading;
 using System.Windows;
-using System.Windows.Forms;
 using System.Windows.Input;
+using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
+using ComboBox = System.Windows.Controls.ComboBox;
 
 
 namespace neural_signatures
 {
     public partial class TrainWebWindow : Window
     {
-        List<string> FIOList = new List<string>(1);
-        public MainWindow f1 { get; set; }
-        public TrainWebWindow() { InitializeComponent();
+        public ComboBox baseComboboxFIO;
+        public TrainWebWindow()
+        {
+            InitializeComponent();
 
-         new Thread(() => {
-                Action action = () =>
-                {
-                    DataBase db = new DataBase();
-                    FIOList = db.SelectFIO();
-                    foreach (string i in FIOList)
-                    {
-                        comboboxFIO.Items.Add(i);
-                    }
-
-                };
-                Dispatcher.Invoke(action);
-
-            }
-                ).Start();
+            Task.Run(() =>
+            {//Получаем список сотрудников
+                foreach (string i in DataBase.SelectFIO())
+                    comboboxFIO.Items.Add(i);
+            });
         }
 
-       
-
-        OpenFileDialog openFileDialog = new OpenFileDialog();
-        private void LoadTrain_Click(object sender, RoutedEventArgs e)
-        {
+        System.Windows.Forms.OpenFileDialog openFileDialog = new System.Windows.Forms.OpenFileDialog();
+        void LoadTrain_Click(object sender, RoutedEventArgs e)
+        {//Загружаем подпись для обучения нейросети
             if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 loaded_img.Source = new BitmapImage(new Uri(openFileDialog.FileName));
@@ -45,33 +33,22 @@ namespace neural_signatures
 
         void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => DragMove();
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            
-            DataBase db = new DataBase();
-          
+        async void Button_Click(object sender, RoutedEventArgs e)
+        {//Добавление нового сотрудника в БД
+            if (insertFIO.Text.Length > 0)
             {
-                db.insertToFIO(insertFIO.Text);
-            }
-           
-            System.Windows.MessageBox.Show("Сотрудник добавлен в БД!");
-            comboboxFIO.Items.Clear();
-            new Thread(() => {
-                Action action = () =>
+                await Task.Run(() =>
                 {
-                    
-                    FIOList = db.SelectFIO();
-                    foreach (string i in FIOList)
+                    Dispatcher.Invoke( () =>
                     {
-                        comboboxFIO.Items.Add(i);
-                    }
+                        DataBase.insertFIOToDB(insertFIO.Text);
 
-                };
-                Dispatcher.Invoke(action);
-
+                        comboboxFIO.Items.Add(insertFIO.Text);
+                        baseComboboxFIO.Items.Add(insertFIO.Text);
+                    });
+                });
+                System.Windows.MessageBox.Show("Сотрудник добавлен в БД!");
             }
-              ).Start();
-            f1.comboboxFIO.Items.Add(insertFIO.Text);
         }
     }
-    }
+}

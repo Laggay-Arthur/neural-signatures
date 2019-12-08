@@ -4,29 +4,33 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:neural_signatures"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="675" Width="1220.698"  MouseLeftButtonDown="Window_MouseLeftButtonDown">
+        mc:Ignorable="d" Height="308.262" Width="989.136" Title="Главное окно" MouseLeftButtonDown="Window_MouseLeftButtonDown">
     <Grid>
-        <Button Content="Загрузить скан" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="191" Click="Button_Click"/>
-        <Label x:Name="ocr_txt" Content="Распознанный текст" HorizontalAlignment="Left" Margin="427,10,0,0" VerticalAlignment="Top"/>
+        <Button Content="Загрузить скан" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="191" Click="Button_Click" FontWeight="Bold" FontSize="16"/>
+        <Label x:Name="ocr_txt" Content="Распознанный текст" HorizontalAlignment="Left" Margin="427,10,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="16"/>
         <TextBox x:Name="textbox1" HorizontalAlignment="Left" Height="216" Margin="427,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="268"/>
         <ProgressBar x:Name="progressbar1" HorizontalAlignment="Left" Height="32" Margin="10,167,0,0" VerticalAlignment="Top" Width="191" Foreground="#FF35BFD4" SmallChange="1" Background="White"/>
         <GroupBox Header="Язык документа" HorizontalAlignment="Left" Height="118" Margin="10,44,0,0" VerticalAlignment="Top" Width="191">
             <Grid>
                 <RadioButton x:Name="radio_rus" Content="Рус." HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" GroupName="radio_lang" IsChecked="True"/>
-
                 <RadioButton x:Name="radio_eng" Content="Анг." HorizontalAlignment="Left" Margin="0,31,0,0" VerticalAlignment="Top" GroupName="radio_lang"/>
                 <RadioButton x:Name="radio_rus_eng" Content="Рус.+Анг." HorizontalAlignment="Left" Margin="0,52,0,0" VerticalAlignment="Top" GroupName="radio_lang"/>
             </Grid>
         </GroupBox>
-        <Button x:Name="set_by_hand" Content="Указать вручную положение подписи" HorizontalAlignment="Left" Margin="206,10,0,0" VerticalAlignment="Top" Width="216" Click="set_by_hand_Click"/>
-        <Button x:Name="TrainWeb" Content="Обучить нейросеть" HorizontalAlignment="Left" Margin="10,320,0,0" VerticalAlignment="Top" Width="119" Click="TrainWeb_Click"/>
-        <Button x:Name="btn_insert_to_db" Content="Добавить в БД" HorizontalAlignment="Left" Margin="324,306,0,0" VerticalAlignment="Top" Width="224" Click="Btn_insert_to_db_Click" Visibility="Hidden"/>
-        <ComboBox x:Name="comboboxFIO" HorizontalAlignment="Left" Margin="277,58,0,0" VerticalAlignment="Top" Width="136"/>
-        <Label x:Name="FIO" Content="ФИО" HorizontalAlignment="Left" Margin="216,58,0,0" VerticalAlignment="Top"/>
-        <DatePicker x:Name="DatePicker" HorizontalAlignment="Left" Margin="315,100,0,0" VerticalAlignment="Top" Text="Дата окончания" Cursor="Pen" SelectedDateChanged="DatePicker_SelectedDateChanged"/>
-        <CheckBox x:Name="date_have" Content="Есть Дата Оконч." HorizontalAlignment="Left" Margin="300,147,0,0" VerticalAlignment="Top" IsChecked="True"/>
-        <Label Content="Дата окончания" HorizontalAlignment="Left" Margin="216,98,0,0" VerticalAlignment="Top"/>
-
+        <Button x:Name="set_by_hand" Visibility="Hidden" Content="Указать вручную положение подписи" HorizontalAlignment="Left" Margin="206,10,0,0" VerticalAlignment="Top" Width="216" Click="set_by_hand_Click" FontSize="16"/>
+        <Button x:Name="TrainWeb" Content="Обучить нейросеть" HorizontalAlignment="Left" Margin="10,204,0,0" VerticalAlignment="Top" Width="191" Click="TrainWeb_Click" FontWeight="Bold" Height="38" FontSize="16"/>
+        <Button x:Name="getTextFromImage" Content="Распознать текст" HorizontalAlignment="Left" Margin="206,45,0,0" VerticalAlignment="Top" Width="178" Click="getTextFromImage_Click" Height="32" FontWeight="Bold" FontSize="16"/>
+        <Label x:Name="ocr_txt_Copy" Content="Обнаруженная подпись" HorizontalAlignment="Left" Margin="700,10,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="16"/>
+        <TextBox x:Name="recognSignatures" HorizontalAlignment="Left" Height="216" Margin="700,41,-1,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="268"/>
+        <Button x:Name="getGignatures" Content="Обнаружить подпись" HorizontalAlignment="Left" Margin="206,88,0,0" VerticalAlignment="Top" Width="178" Click="getGignatures_Click" Height="32" FontWeight="Bold" FontSize="16"/>
+        <GroupBox Header="Добавление документа" HorizontalAlignment="Left" Height="141" Margin="206,125,0,0" VerticalAlignment="Top" Width="221">
+            <Grid>
+                <Button x:Name="btn_insert_to_db" Content="Добавить в БД" HorizontalAlignment="Left" Margin="0,90,0,0" VerticalAlignment="Top" Width="204" Click="Btn_insert_to_db_Click" />
+                <ComboBox x:Name="comboboxFIO" HorizontalAlignment="Left" Margin="37,4,0,0" VerticalAlignment="Top" Width="167"/>
+                <Label x:Name="FIO" Content="ФИО" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <DatePicker x:Name="datePicker" Visibility="Hidden" HorizontalAlignment="Left" Margin="8,61,0,0" VerticalAlignment="Top" Text="Дата окончания" Cursor="Pen" SelectedDateChanged="DatePicker_SelectedDateChanged" Width="191"/>
+                <CheckBox x:Name="date_have" Content="Есть дата окончания" HorizontalAlignment="Left" Margin="8,40,0,0" VerticalAlignment="Top" Click="date_have_Click"/>
+            </Grid>
+        </GroupBox>
     </Grid>
 </Window>

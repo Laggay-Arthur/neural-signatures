@@ -4,59 +4,37 @@ using System.IO;
 using System.Windows;
 using System.Drawing;
 using Microsoft.Win32;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Collections.Generic;
+
 
 namespace neural_signatures
 {
     public partial class MainWindow : Window
     {
         private string SafeFileName = "";
-        DateTime? date_validity=null;
-      public static List<string> FIOList = new List<string>(1);
-        public MainWindow() { InitializeComponent();
-
-            /*new Thread(() => {
-                Action action = () =>
-                {
-                    DataBase db = new DataBase(ref comboboxFIO);
-                    FIOList = db.SelectFIO();
-                    foreach (string i in FIOList)
-                    {
-                        comboboxFIO.Items.Add(i);
-                    }
-
-                };
-                Dispatcher.Invoke(action);
-            }
-                ).Start();*/
-
-            FIOAsync(comboboxFIO);
-           
+        DateTime? date_validity;
+        public MainWindow()
+        {
+            InitializeComponent();
+            DataBase.Init(ref this.comboboxFIO);//Передаём элементы в который можно добавить нового сотрудника
+            getFIOAsync();
         }
 
-       public static async void FIOAsync(ComboBox comboboxFIO)
-        {
+        async void getFIOAsync()
+        {//Получаем список сотрудников и выводим их списом
             await Task.Run(() =>
-              {
-
-                  DataBase db = new DataBase();
-                  FIOList = db.SelectFIO();
-                  
-              }
-           
-               );
-            foreach (string i in FIOList)
             {
-                comboboxFIO.Items.Add(i);
-            }
+                foreach (string i in DataBase.SelectFIO())
+                    comboboxFIO.Items.Add(i);
+            });
         }
-    
+
         OpenFileDialog openFileDialog = new OpenFileDialog();
-        async void Button_Click(object sender, RoutedEventArgs e)
-        {
+        void Button_Click(object sender, RoutedEventArgs e)
+        {//Нажата кнопка загрузки скана
             if (openFileDialog.ShowDialog() == true)
             {
                 SafeFileName = openFileDialog.SafeFileName;
@@ -67,42 +45,14 @@ namespace neural_signatures
 
                 if (!File.Exists(docDir + openFileDialog.SafeFileName))
                     File.Copy(openFileDialog.FileName, docDir + openFileDialog.SafeFileName);
-                
-                //else
-                //{
-                //    MessageBox.Show("Файл с таким именем уже существует в проекте в папке /debug/documents. Скорее всего вы уже его загружали. Проверьте, если файлы действительно разные, то переименуйте его! Если файлы одинаковые, то запускайте из папки documents");
-                //    progressbar1.Value = 0;
-                //    return;
-                //}
-
-                //loaded_img.Source = new BitmapImage(new Uri(openFileDialog.FileName));
-
-                string radio_lang = "rus";
-                if ((bool)radio_rus.IsChecked)
-                { radio_lang = "rus"; }
-                else if ((bool)radio_eng.IsChecked)
-                { radio_lang = "eng"; }
-                else if ((bool)radio_rus_eng.IsChecked)
-                { radio_lang = "rus+eng"; }
-
-                Bitmap img = new Bitmap(openFileDialog.FileName);
-
-                string s = "";
-                await Task.Run(() =>
-                {
-                    TesseractEngine ocr = new TesseractEngine("./tessdata", radio_lang);
-                    var page = ocr.Process(img, PageSegMode.Auto);
-                    s = page.GetText();
-                });
-                btn_insert_to_db.Visibility = Visibility.Visible;
-                textbox1.Text = s;
+                set_by_hand.Visibility = Visibility.Visible;
             }
         }
 
         void Window_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e) => DragMove();
-        SetPositionByHand spbh = null;
+        SetPositionByHand spbh;//Окно, в котором можно вручную указать расположение подписи
         void set_by_hand_Click(object sender, RoutedEventArgs e)
-        {
+        {//Открывает окно для ручного указания расположения подписи
             if (openFileDialog.FileName.Length > 0)
             {
                 spbh = new SetPositionByHand(openFileDialog.FileName);
@@ -110,46 +60,84 @@ namespace neural_signatures
             }
             else { MessageBox.Show("Укажите какой скан загружать"); }
         }
-        TrainWebWindow tww = null;
+        TrainWebWindow tww;//Окно, в котором можно обучать нейросеть
         void TrainWeb_Click(object sender, RoutedEventArgs e)
-        {
+        {//Открывает окно для обучения нейросети
             if (tww != null)
             {
-                tww.Close();
+                tww.Show(); return;
             }
-            tww = new TrainWebWindow();
-            tww.f1 = this;
+            tww = new TrainWebWindow
+            {
+                baseComboboxFIO = this.comboboxFIO
+            };
             tww.Show();
         }
 
-        private void Btn_insert_to_db_Click(object sender, RoutedEventArgs e)
+        void Btn_insert_to_db_Click(object sender, RoutedEventArgs e)
         {
-            if ((date_validity == null) && (date_have.IsChecked==true))
+            if ((date_validity == null) && (date_have.IsChecked == true))
             {
-                MessageBox.Show("Пожалуйста, проверьте дату окончания документа, если она есть в договоре!");
+                MessageBox.Show("Пожалуйста, укажите дату окончания документа!");
                 return;
             }
-            DataBase db = new DataBase();
             if (date_have.IsChecked == false)
-            {
-                db.insert(SafeFileName, comboboxFIO.Text, textbox1.Text);
-            }
-            else db.insert(SafeFileName, comboboxFIO.Text, textbox1.Text, (DateTime)date_validity);
+                DataBase.insert(SafeFileName, comboboxFIO.Text, textbox1.Text);
+            else DataBase.insert(SafeFileName, comboboxFIO.Text, textbox1.Text, (DateTime)date_validity);
             MessageBox.Show("Документ добавлен!");
         }
 
-        private void DatePicker_SelectedDateChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            date_validity = (DateTime)DatePicker.SelectedDate;
+        void DatePicker_SelectedDateChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e) => date_validity = (DateTime)datePicker.SelectedDate;
+
+        void date_have_Click(object sender, RoutedEventArgs e)
+        {//Скрываем/показываем выбор даты окончания
+            if (date_have.IsChecked == true)
+                datePicker.Visibility = Visibility.Visible;
+
+            else
+                datePicker.Visibility = Visibility.Hidden;
         }
 
-      public string setFIOBox
-        {
-            set { string i = value;
-                comboboxFIO.Items.Add(i);
-            }
-            
+        async void getTextFromImage_Click(object sender, RoutedEventArgs e)
+        {//Считывание текста со скана
+            if (openFileDialog.FileName.Length == 0) return;
+            progressbar1.Value = 0;
+            string radio_lang = (bool)radio_rus.IsChecked ? "rus" : (bool)radio_eng.IsChecked ? "eng" : (bool)radio_rus_eng.IsChecked ? "rus+eng" : "";
+
+            Bitmap img = new Bitmap(openFileDialog.FileName);
+
+            string s = "";
+            Task progress;
+            await Task.Run(() =>
+            {//Запускаем в отдельном потоке увеличение прогрессбара и распознавание текста
+                CancellationTokenSource source = new CancellationTokenSource();
+                CancellationToken token = source.Token;
+                progress = Dispatcher.Invoke(async () =>
+                    {
+                        while (progressbar1.Value < 100)
+                        {
+                            progressbar1.Value++;
+
+                            await Task.Delay(100);
+                        }
+                    }, System.Windows.Threading.DispatcherPriority.Normal, token);
+
+                TesseractEngine ocr = new TesseractEngine("./tessdata", radio_lang);
+                var page = ocr.Process(img, PageSegMode.Auto);
+                s = page.GetText();
+                if (!progress.IsCompleted)
+                {
+                    token.ThrowIfCancellationRequested(); Dispatcher.Invoke(() => progressbar1.Value = 100);
+                }
+            });
+            btn_insert_to_db.Visibility = Visibility.Visible;
+            textbox1.Text = s;
+            img.Dispose();
         }
-  
+
+        void getGignatures_Click(object sender, RoutedEventArgs e)
+        {//Автоопределение положения подписи
+
+        }
     }
 }
