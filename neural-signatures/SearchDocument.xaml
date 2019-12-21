@@ -8,7 +8,10 @@
         Title="SearchDocument" Height="450" Width="800">
     <Grid MouseLeftButtonDown="Grid_MouseLeftButtonDown">
         <Button x:Name="ShowAll" Content="Вывести все Документы" HorizontalAlignment="Left" Margin="10,62,0,0" VerticalAlignment="Top" Width="150" Click="ShowAll_Click"/>
-        <DataGrid x:Name="datagrid" HorizontalAlignment="Left" Height="390" Margin="178,19,0,0" VerticalAlignment="Top" Width="594"/>
+        <DataGrid x:Name="datagrid" HorizontalAlignment="Left" Height="390" Margin="224,19,0,0" VerticalAlignment="Top" Width="548"/>
+        <CheckBox x:Name="check_person" Content="Поиск по сотруднику" HorizontalAlignment="Left" Margin="10,106,0,0" VerticalAlignment="Top" Click="Check_person_Click"/>
+        <Button x:Name="search_person" Content="Поиск" HorizontalAlignment="Left" Margin="9,149,0,0" VerticalAlignment="Top" Width="75" IsEnabled="False" Click="Search_person_Click"/>
+        <ComboBox x:Name="select_person" HorizontalAlignment="Left" Margin="99,147,0,0" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
 
     </Grid>
 </Window>

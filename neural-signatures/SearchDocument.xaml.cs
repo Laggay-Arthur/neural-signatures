@@ -11,7 +11,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Collections.Generic;
 
 namespace neural_signatures
 {
@@ -23,6 +22,11 @@ namespace neural_signatures
         public SearchDocument()
         {
             InitializeComponent();
+            List<string> persons = new List<string>();
+            persons = DataBase.SelectFIO();
+            select_person.ItemsSource = persons;
+
+
         }
 
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => DragMove();
@@ -37,6 +41,19 @@ namespace neural_signatures
                  datagrid.Items.Add(i);
              }*/
             datagrid.ItemsSource = DocAll;
+        }
+
+
+        private void Check_person_Click(object sender, RoutedEventArgs e)
+        {
+            search_person.IsEnabled = !search_person.IsEnabled; select_person.IsEnabled = !select_person.IsEnabled;
+        }
+
+        private void Search_person_Click(object sender, RoutedEventArgs e)
+        {
+            List<TableDoc> DocPerson = new List<TableDoc>();
+           DocPerson= DataBase.SelectPersonDoc(select_person.Text.ToString());
+            datagrid.ItemsSource = DocPerson;
         }
     }
 }
