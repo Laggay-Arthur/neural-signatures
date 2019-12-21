@@ -84,8 +84,11 @@ namespace neural_signatures
                 return;
             }
             if (date_have.IsChecked == false)
-                DataBase.insert(SafeFileName, comboboxFIO.Text, textbox1.Text);
-            else DataBase.insert(SafeFileName, comboboxFIO.Text, textbox1.Text, (DateTime)date_validity);
+                if (comboboxFIO.SelectedItem !=null)
+                    DataBase.insert(SafeFileName, comboboxFIO.Text, textbox1.Text);
+                else DataBase.insertWithoutFIO(SafeFileName, textbox1.Text);
+            else if(comboboxFIO.SelectedItem != null) DataBase.insert(SafeFileName, comboboxFIO.Text, textbox1.Text, (DateTime)date_validity);
+                    else DataBase.insertWithoutFIO(SafeFileName, textbox1.Text, (DateTime)date_validity);
             MessageBox.Show("Документ добавлен!");
         }
 
@@ -140,6 +143,12 @@ namespace neural_signatures
         void getGignatures_Click(object sender, RoutedEventArgs e)
         {//Автоопределение положения подписи
 
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            SearchDocument searchdoc = new SearchDocument();
+            searchdoc.Show();
         }
     }
 }

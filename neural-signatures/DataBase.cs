@@ -58,7 +58,31 @@ namespace neural_signatures
             }
             return "Данные занесены в таблицу!";
         }
-
+        public static string insertWithoutFIO(string name_document, string text_document, DateTime? date_validity = null)
+        {//Добавление в БД нового документа 
+            sqlconnection = new SqlConnection(Connection);
+            try
+            {
+                sqlconnection.Open();
+                SqlCommand com = new SqlCommand(
+                   $"INSERT INTO DocumentsAll(name_document, text_document, date_document{ (date_validity != null ? ",date_validity" : "")}) VALUES(@name_document, @text_document, @date_document{ (date_validity != null ? ",@date_validity" : "")})", sqlconnection);
+                com.Parameters.AddWithValue("name_document", name_document);
+                com.Parameters.AddWithValue("text_document", text_document);
+                com.Parameters.AddWithValue("date_document", DateTime.Now);
+                if (date_validity != null)
+                    com.Parameters.AddWithValue("date_validity", date_validity);
+                com.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                return "Возникла ошибка добавления!";
+            }
+            finally
+            {
+                sqlconnection.Close();
+            }
+            return "Данные занесены в таблицу!";
+        }
         public static string insertFIOToDB(string FIO)
         {
             sqlconnection = new SqlConnection(Connection);
@@ -79,9 +103,10 @@ namespace neural_signatures
             { sqlconnection.Close(); }
             return "Данные занесены в таблицу!";
         }
-        public static void SelectAll()
+        public static List<TableDoc> SelectAllDoc()
         {
             sqlconnection = new SqlConnection(Connection);
+            List<TableDoc> DocAll = new List<TableDoc>();
             try
             {
                 sqlconnection.Open();
@@ -91,7 +116,7 @@ namespace neural_signatures
                 SqlDataReader sqlreader = com.ExecuteReader();
                 while (sqlreader.Read())
                 {
-                    text = sqlreader["text_document"].ToString();
+                    DocAll.Add(new TableDoc(sqlreader["name_document"].ToString(), sqlreader["name_people"].ToString(), sqlreader["date_document"].ToString(), sqlreader["date_validity"].ToString()));
                 }
                 sqlreader.Close();
                 com.Dispose();
@@ -102,6 +127,7 @@ namespace neural_signatures
             }
             finally
             { sqlconnection.Close(); }
+            return DocAll;
         }
 
         public static List<string> SelectFIO()
