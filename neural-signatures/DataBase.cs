@@ -130,6 +130,33 @@ namespace neural_signatures
             return DocAll;
         }
 
+        public static List<TableDoc> SelectPersonDoc(string person)
+        {
+            sqlconnection = new SqlConnection(Connection);
+            List<TableDoc> DocAll = new List<TableDoc>();
+            try
+            {
+                sqlconnection.Open();
+                SqlCommand com = new SqlCommand(
+                    "SELECT * FROM DocumentsAll WHERE name_people =@person", sqlconnection);
+                com.Parameters.AddWithValue("person", person);
+                SqlDataReader sqlreader = com.ExecuteReader();
+                while (sqlreader.Read())
+                {
+                    DocAll.Add(new TableDoc(sqlreader["name_document"].ToString(), sqlreader["name_people"].ToString(), sqlreader["date_document"].ToString(), sqlreader["date_validity"].ToString()));
+                }
+                sqlreader.Close();
+                com.Dispose();
+            }
+            catch (Exception)
+            {
+
+            }
+            finally
+            { sqlconnection.Close(); }
+            return DocAll;
+        }
+
         public static List<string> SelectFIO()
         {
             List<string> FIOs = new List<string>();
