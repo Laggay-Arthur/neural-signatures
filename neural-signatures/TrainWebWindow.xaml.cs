@@ -18,8 +18,11 @@ namespace neural_signatures
             baseComboboxFIO = combo;
             Task.Run(() =>
             {//Получаем список сотрудников
-                foreach (string i in DataBase.SelectFIO())
-                    comboboxFIO.Items.Add(i);
+                Dispatcher.Invoke(() => {
+                    foreach (string i in DataBase.SelectFIO())
+                        comboboxFIO.Items.Add(i);
+                });
+                
             });
         }
 

@@ -64,9 +64,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DataBase.cs" />
+    <Compile Include="SearchDocument.xaml.cs">
+      <DependentUpon>SearchDocument.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SetPositionByHand.xaml.cs">
       <DependentUpon>SetPositionByHand.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TableDoc.cs" />
     <Compile Include="TrainWebWindow.xaml.cs">
       <DependentUpon>TrainWebWindow.xaml</DependentUpon>
     </Compile>
@@ -82,6 +86,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="SearchDocument.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SetPositionByHand.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

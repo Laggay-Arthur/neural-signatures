@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:neural_signatures"
-        mc:Ignorable="d" Height="308.262" Width="989.136" Title="Главное окно" MouseLeftButtonDown="Window_MouseLeftButtonDown">
+        mc:Ignorable="d" Height="348.262" Width="989.136" Title="Главное окно" MouseLeftButtonDown="Window_MouseLeftButtonDown">
     <Grid>
         <Button Content="Загрузить скан" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="191" Click="Button_Click" FontWeight="Bold" FontSize="16"/>
         <Label x:Name="ocr_txt" Content="Распознанный текст" HorizontalAlignment="Left" Margin="427,10,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="16"/>
@@ -32,5 +32,6 @@
                 <CheckBox x:Name="date_have" Content="Есть дата окончания" HorizontalAlignment="Left" Margin="8,40,0,0" VerticalAlignment="Top" Click="date_have_Click"/>
             </Grid>
         </GroupBox>
+        <Button Content="Поиск по Документам" HorizontalAlignment="Left" Margin="10,266,0,0" VerticalAlignment="Top" Width="191" Height="27" Click="Button_Click_1"/>
     </Grid>
 </Window>
