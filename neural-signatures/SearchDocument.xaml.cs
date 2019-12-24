@@ -1,58 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using System.Collections.Generic;
+
 
 namespace neural_signatures
 {
-    /// <summary>
-    /// Логика взаимодействия для SearchDocument.xaml
-    /// </summary>
     public partial class SearchDocument : Window
     {
         public SearchDocument()
         {
             InitializeComponent();
-            List<string> persons = new List<string>();
-            persons = DataBase.SelectFIO();
-            select_person.ItemsSource = persons;
-
-
+            select_person.ItemsSource = DataBase.SelectFIO();
         }
-
-        private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => DragMove();
-
-        private void ShowAll_Click(object sender, RoutedEventArgs e)
+        void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => DragMove();
+        void ShowAll_Click(object sender, RoutedEventArgs e) => datagrid.ItemsSource = DataBase.SelectAllDoc();
+        void Check_person_Click(object sender, RoutedEventArgs e)
         {
-            
-            List<TableDoc> DocAll = new List<TableDoc>();
-            DocAll = DataBase.SelectAllDoc();
-            /* foreach (TableDoc i in DocAll)
-             {
-                 datagrid.Items.Add(i);
-             }*/
-            datagrid.ItemsSource = DocAll;
+            if (check_person.IsChecked == true)
+                select_person.Visibility = search_person.Visibility = Visibility.Visible;
+            else
+                select_person.Visibility = search_person.Visibility = Visibility.Hidden;
         }
-
-
-        private void Check_person_Click(object sender, RoutedEventArgs e)
-        {
-            search_person.IsEnabled = !search_person.IsEnabled; select_person.IsEnabled = !select_person.IsEnabled;
-        }
-
-        private void Search_person_Click(object sender, RoutedEventArgs e)
+        void Search_person_Click(object sender, RoutedEventArgs e)
         {
             List<TableDoc> DocPerson = new List<TableDoc>();
-           DocPerson= DataBase.SelectPersonDoc(select_person.Text.ToString());
+            DocPerson = DataBase.SelectPersonDoc(select_person.Text.ToString());
             datagrid.ItemsSource = DocPerson;
         }
     }

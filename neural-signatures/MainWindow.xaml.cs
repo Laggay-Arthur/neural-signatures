@@ -22,19 +22,18 @@ namespace neural_signatures
             DataBase.Init(ref this.comboboxFIO);//Передаём элементы в который можно добавить нового сотрудника
             getFIOAsync();
         }
-
         async void getFIOAsync()
-        {//Получаем список сотрудников и выводим их списом
+        {//Получаем список сотрудников и выводим их списком
             await Task.Run(() =>
             {
-                Dispatcher.Invoke(() => {
+                Dispatcher.Invoke(() =>
+                {
                     foreach (string i in DataBase.SelectFIO())
                         comboboxFIO.Items.Add(i);
                 });
-                
+
             });
         }
-
         OpenFileDialog openFileDialog = new OpenFileDialog();
         void Button_Click(object sender, RoutedEventArgs e)
         {//Нажата кнопка загрузки скана
@@ -51,7 +50,6 @@ namespace neural_signatures
                 set_by_hand.Visibility = Visibility.Visible;
             }
         }
-
         void Window_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e) => DragMove();
         SetPositionByHand spbh;//Окно, в котором можно вручную указать расположение подписи
         void set_by_hand_Click(object sender, RoutedEventArgs e)
@@ -66,16 +64,11 @@ namespace neural_signatures
         TrainWebWindow tww;//Окно, в котором можно обучать нейросеть
         void TrainWeb_Click(object sender, RoutedEventArgs e)
         {//Открывает окно для обучения нейросети
+            if (tww != null) tww = null;
 
-            if (tww != null)
-            {
-                tww = null;
-            }
-            tww = new TrainWebWindow(ref this.comboboxFIO);
+            tww = new TrainWebWindow(ref comboboxFIO);
             tww.Show();
-
         }
-
         void Btn_insert_to_db_Click(object sender, RoutedEventArgs e)
         {
             if ((date_validity == null) && (date_have.IsChecked == true))
@@ -84,16 +77,14 @@ namespace neural_signatures
                 return;
             }
             if (date_have.IsChecked == false)
-                if (comboboxFIO.SelectedItem !=null)
+                if (comboboxFIO.SelectedItem != null)
                     DataBase.insert(SafeFileName, comboboxFIO.Text, textbox1.Text);
                 else DataBase.insertWithoutFIO(SafeFileName, textbox1.Text);
-            else if(comboboxFIO.SelectedItem != null) DataBase.insert(SafeFileName, comboboxFIO.Text, textbox1.Text, (DateTime)date_validity);
-                    else DataBase.insertWithoutFIO(SafeFileName, textbox1.Text, (DateTime)date_validity);
+            else if (comboboxFIO.SelectedItem != null) DataBase.insert(SafeFileName, comboboxFIO.Text, textbox1.Text, (DateTime)date_validity);
+            else DataBase.insertWithoutFIO(SafeFileName, textbox1.Text, (DateTime)date_validity);
             MessageBox.Show("Документ добавлен!");
         }
-
-        void DatePicker_SelectedDateChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e) => date_validity = (DateTime)datePicker.SelectedDate;
-
+        void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e) => date_validity = (DateTime)datePicker.SelectedDate;
         void date_have_Click(object sender, RoutedEventArgs e)
         {//Скрываем/показываем выбор даты окончания
             if (date_have.IsChecked == true)
@@ -102,7 +93,6 @@ namespace neural_signatures
             else
                 datePicker.Visibility = Visibility.Hidden;
         }
-
         async void getTextFromImage_Click(object sender, RoutedEventArgs e)
         {//Считывание текста со скана
             if (openFileDialog.FileName.Length == 0) return;
@@ -131,21 +121,17 @@ namespace neural_signatures
                 var page = ocr.Process(img, PageSegMode.Auto);
                 s = page.GetText();
                 if (!progress.IsCompleted)
-                {
                     token.ThrowIfCancellationRequested(); Dispatcher.Invoke(() => progressbar1.Value = 100);
-                }
             });
             btn_insert_to_db.Visibility = Visibility.Visible;
             textbox1.Text = s;
             img.Dispose();
         }
-
         void getGignatures_Click(object sender, RoutedEventArgs e)
         {//Автоопределение положения подписи
 
         }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        void Button_Click_1(object sender, RoutedEventArgs e)
         {
             SearchDocument searchdoc = new SearchDocument();
             searchdoc.Show();
