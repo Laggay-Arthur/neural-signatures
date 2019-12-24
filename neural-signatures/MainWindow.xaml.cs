@@ -19,7 +19,7 @@ namespace neural_signatures
         public MainWindow()
         {
             InitializeComponent();
-            DataBase.Init(ref this.comboboxFIO);//Передаём элементы в который можно добавить нового сотрудника
+            DataBase.Init(ref comboboxFIO);//Передаём элементы в который можно добавить нового сотрудника
             getFIOAsync();
         }
         async void getFIOAsync()
@@ -31,7 +31,6 @@ namespace neural_signatures
                     foreach (string i in DataBase.SelectFIO())
                         comboboxFIO.Items.Add(i);
                 });
-
             });
         }
         OpenFileDialog openFileDialog = new OpenFileDialog();

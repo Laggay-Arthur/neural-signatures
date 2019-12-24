@@ -15,7 +15,7 @@ namespace neural_signatures
         public static void Init(ref System.Windows.Controls.ComboBox combo) => combobox = combo;
 
         public static string Connection
-        {
+        {//Подключение к БД
             get
             {
                 string path = AppDomain.CurrentDomain.BaseDirectory;
@@ -48,14 +48,8 @@ namespace neural_signatures
                     com.Parameters.AddWithValue("date_validity", date_validity);
                 com.ExecuteNonQuery();
             }
-            catch (Exception)
-            {
-                return "Возникла ошибка добавления!";
-            }
-            finally
-            {
-                sqlconnection.Close();
-            }
+            catch (Exception) { return "Возникла ошибка добавления!"; }
+            finally { sqlconnection.Close(); }
             return "Данные занесены в таблицу!";
         }
         public static string insertWithoutFIO(string name_document, string text_document, DateTime? date_validity = null)
@@ -73,18 +67,12 @@ namespace neural_signatures
                     com.Parameters.AddWithValue("date_validity", date_validity);
                 com.ExecuteNonQuery();
             }
-            catch (Exception)
-            {
-                return "Возникла ошибка добавления!";
-            }
-            finally
-            {
-                sqlconnection.Close();
-            }
+            catch (Exception) { return "Возникла ошибка добавления!"; }
+            finally { sqlconnection.Close(); }
             return "Данные занесены в таблицу!";
         }
         public static string insertFIOToDB(string FIO)
-        {
+        {//Добавление нового
             sqlconnection = new SqlConnection(Connection);
             try
             {
@@ -95,12 +83,8 @@ namespace neural_signatures
 
                 com.ExecuteNonQuery();
             }
-            catch (Exception)
-            {
-
-            }
-            finally
-            { sqlconnection.Close(); }
+            catch (Exception) { }
+            finally { sqlconnection.Close(); }
             return "Данные занесены в таблицу!";
         }
         public static List<TableDoc> SelectAllDoc()
@@ -121,12 +105,8 @@ namespace neural_signatures
                 sqlreader.Close();
                 com.Dispose();
             }
-            catch (Exception)
-            {
-
-            }
-            finally
-            { sqlconnection.Close(); }
+            catch (Exception) { }
+            finally { sqlconnection.Close(); }
             return DocAll;
         }
 
@@ -148,12 +128,8 @@ namespace neural_signatures
                 sqlreader.Close();
                 com.Dispose();
             }
-            catch (Exception)
-            {
-
-            }
-            finally
-            { sqlconnection.Close(); }
+            catch (Exception) { }
+            finally { sqlconnection.Close(); }
             return DocAll;
         }
 
@@ -175,11 +151,51 @@ namespace neural_signatures
                 sqlreader.Close();
                 com.Dispose();
             }
-            catch (Exception)
-            { }
-            finally
-            { sqlconnection.Close(); }
+            catch (Exception) { }
+            finally { sqlconnection.Close(); }
             return FIOs;
+        }
+
+        public static List<Neiron> SelectNeiroins()
+        {
+            List<Neiron> Neirons = new List<Neiron>();
+            sqlconnection = new SqlConnection(Connection);
+
+            try
+            {
+                sqlconnection.Open();
+                SqlCommand com = new SqlCommand("SELECT * FROM Neirons", sqlconnection);
+
+                SqlDataReader sqlreader = com.ExecuteReader();
+                while (sqlreader.Read())
+                {
+                    Neirons.Add(sqlreader["Neiron"] as Neiron);
+                }
+                sqlreader.Close();
+                com.Dispose();
+            }
+            catch (Exception) { }
+            finally { sqlconnection.Close(); }
+            return Neirons;
+        }
+
+        public static string insertNeiron(Neiron neir)
+        {//Добавление в БД нового документа 
+            sqlconnection = new SqlConnection(Connection);
+            try
+            {
+                sqlconnection.Open();
+                SqlCommand com = new SqlCommand("SELECT COUNT(*) FROM Neirons WHERE id>=0", sqlconnection);
+                int count = (int)com.ExecuteScalar();
+                com.ExecuteNonQuery();
+
+                com = new SqlCommand(
+                   $"INSERT INTO Neirons VALUES({count + 1},{neir})", sqlconnection);
+                com.ExecuteNonQuery();
+            }
+            catch (Exception) { return "Возникла ошибка добавления!"; }
+            finally { sqlconnection.Close(); }
+            return "Данные занесены в таблицу!";
         }
     }
 }

@@ -41,6 +41,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -64,6 +65,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DataBase.cs" />
+    <Compile Include="Neiron.cs" />
     <Compile Include="SearchDocument.xaml.cs">
       <DependentUpon>SearchDocument.xaml</DependentUpon>
     </Compile>
@@ -74,6 +76,8 @@
     <Compile Include="TrainWebWindow.xaml.cs">
       <DependentUpon>TrainWebWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utils.cs" />
+    <Compile Include="Web.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
