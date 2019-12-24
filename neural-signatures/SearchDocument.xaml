@@ -5,13 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:neural_signatures"
         mc:Ignorable="d"
-        Title="Поиск по документам" Height="450" Width="677.717">
+        Title="Поиск по документам" Height="450" Width="964.717">
     <Grid MouseLeftButtonDown="Grid_MouseLeftButtonDown">
         <Button x:Name="ShowAll" Content="Вывести все Документы" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="209" Click="ShowAll_Click" FontSize="16" FontWeight="Bold"/>
         <DataGrid x:Name="datagrid" HorizontalAlignment="Left" Height="371" Margin="10,38,0,0" VerticalAlignment="Top" Width="648"/>
         <CheckBox x:Name="check_person" Content="Поиск по сотруднику" HorizontalAlignment="Left" Margin="224,10,0,0" VerticalAlignment="Top" Click="Check_person_Click" FontSize="14"/>
         <Button x:Name="search_person" Content="Поиск" HorizontalAlignment="Left" Margin="384,10,0,0" VerticalAlignment="Top" Width="75" Click="Search_person_Click" FontSize="14" Visibility="Hidden"/>
         <ComboBox x:Name="select_person" HorizontalAlignment="Left" Margin="464,8,0,0" VerticalAlignment="Top" Width="194" FontSize="14" Visibility="Hidden"/>
+        <DatePicker x:Name="datePicker" HorizontalAlignment="Left" Margin="733,13,0,0" VerticalAlignment="Top" SelectedDateChanged="DatePicker_SelectedDateChanged"/>
+        <TextBox x:Name="textbox" HorizontalAlignment="Left" Height="23" Margin="663,65,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="190"/>
+        <Button Content="Поиск Фразы" HorizontalAlignment="Left" Margin="868,68,0,0" VerticalAlignment="Top" Width="89" Click="Button_Click"/>
 
     </Grid>
 </Window>
