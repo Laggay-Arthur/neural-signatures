@@ -1,12 +1,13 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 using System.Collections.Generic;
-
+using System;
 
 namespace neural_signatures
 {
     public partial class SearchDocument : Window
     {
+        DateTime? date_validity;
         public SearchDocument()
         {
             InitializeComponent();
@@ -26,6 +27,22 @@ namespace neural_signatures
             List<TableDoc> DocPerson = new List<TableDoc>();
             DocPerson = DataBase.SelectPersonDoc(select_person.Text.ToString());
             datagrid.ItemsSource = DocPerson;
+        }
+
+        private void DatePicker_SelectedDateChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            List<TableDoc> doc_date = new List<TableDoc>();
+            //List<TableDoc> doc_date2 = new List<TableDoc>();
+            date_validity = (DateTime)datePicker.SelectedDate;
+            doc_date = DataBase.SelectAllDocDate(date_validity);
+            datagrid.ItemsSource = doc_date;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            List<TableDoc> doc_string = new List<TableDoc>();
+            doc_string = DataBase.SelectAllDocString(textbox.Text);
+            datagrid.ItemsSource = doc_string;
         }
     }
 }

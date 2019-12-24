@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace neural_signatures
 {
-    class TableDoc
+   public class TableDoc
     {
         /*string name_document;
         DateTime? date_document;

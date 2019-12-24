@@ -22,7 +22,6 @@
         <Button x:Name="getTextFromImage" Content="Распознать текст" HorizontalAlignment="Left" Margin="206,45,0,0" VerticalAlignment="Top" Width="204" Click="getTextFromImage_Click" Height="32" FontWeight="Bold" FontSize="16"/>
         <Label x:Name="ocr_txt_Copy" Content="Обнаруженная подпись" HorizontalAlignment="Left" Margin="700,10,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="16"/>
         <TextBox x:Name="recognSignatures" HorizontalAlignment="Left" Height="233" Margin="700,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="268"/>
-        <Button x:Name="getGignatures" Content="Обнаружить подпись" HorizontalAlignment="Left" Margin="206,88,0,0" VerticalAlignment="Top" Width="204" Click="getGignatures_Click" Height="32" FontWeight="Bold" FontSize="16"/>
         <GroupBox Header="Добавление документа" HorizontalAlignment="Left" Height="149" Margin="206,125,0,0" VerticalAlignment="Top" Width="221">
             <Grid>
                 <Button x:Name="btn_insert_to_db" Content="Добавить в БД" HorizontalAlignment="Left" Margin="0,90,0,0" VerticalAlignment="Top" Width="204" Click="Btn_insert_to_db_Click" />
